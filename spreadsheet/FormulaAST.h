@@ -1,8 +1,7 @@
 #pragma once
 
-#include "FormulaLexer.h"
 #include "common.h"
-
+#include "FormulaLexer.h"
 #include <forward_list>
 #include <functional>
 #include <stdexcept>
@@ -23,7 +22,7 @@ public:
     FormulaAST& operator=(FormulaAST&&) = default;
     ~FormulaAST();
 
-    double Execute(/*добавьте нужные аргументы*/ args) const;
+    double Execute(std::function<double(Position)> args) const;
     void PrintCells(std::ostream& out) const;
     void Print(std::ostream& out) const;
     void PrintFormula(std::ostream& out) const;
