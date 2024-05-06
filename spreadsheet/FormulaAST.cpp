@@ -142,21 +142,23 @@ public:
 
     double Evaluate(std::function<double(Position)> args) const override {
         double result = 0;
+        double left_arg = lhs_->Evaluate(args);
+        double right_arg = rhs_->Evaluate(args);
         switch (type_) {
             case Add:
-                result = lhs_->Evaluate(args) + rhs_->Evaluate(args);
+                result = left_arg + right_arg;
                 break;
             case Subtract:
-                result = lhs_->Evaluate(args) - rhs_->Evaluate(args);
+                result = left_arg - right_arg;
                 break;
             case Multiply:
-                result = lhs_->Evaluate(args) * rhs_->Evaluate(args);
+                result = left_arg * right_arg;
                 break;
             case Divide:
-                if (!std::isfinite(lhs_->Evaluate(args) / rhs_->Evaluate(args))) {
+                if (!std::isfinite(left_arg / right_arg)) {
                     throw FormulaError(FormulaError::Category::Arithmetic);
                 }
-                result = lhs_->Evaluate(args) / rhs_->Evaluate(args);
+                result = left_arg / right_arg;
                 break;
         }
         if (!std::isfinite(result)) {
